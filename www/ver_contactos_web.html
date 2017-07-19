@@ -1,0 +1,78 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bootstrap 101 Template</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="css/estilo.css" rel="stylesheet">
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+	<div class="col-xs-12" style="background: rgba(0,0,0,0.5);padding:18px 20px !important;margin:0">
+		<img src="img/logo.png" width="140" class="logo" />
+	</div>
+	<div class="container">
+		<div class="clearfix"></div>
+		<br>
+		<div id="contactos" class="panel-group">
+		</div>
+	</div>
+
+	<div class="panel-group" id="formModificar">
+	</div>
+
+	<div>
+		<div class="col-xs-12"> </div>
+	</div>
+
+
+	<div id="footer"></div>
+
+	<div id="loading">Cargando...</div>
+
+	<script src='cordova.js'></script>
+	<script src="js/geolocation.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/validator.js"></script>
+	<script src="js/app.js"></script>
+	<script>
+		traerContactosWeb(localStorage.getItem("idUsuario"));
+	</script>
+
+	<script>
+		function ModificarUsuarioContactosWeb() {
+			//e.preventDefault();
+			var nombre = $("#nombre").val();
+ 			var email = $("#email").val();
+			var celular = $("#celular").val();
+            var telefono = $("#telefono").val();
+			var mensaje = $("#mensaje").val();
+			var respuesta = $("#respuesta").val();
+			var id = $("#id").val();
+ 
+			$.ajax({
+				type: "GET",
+				url: url + "modificar.contactos.usuario.web.php",
+				data: "nombre=" + nombre + "&email=" + email + "&celular=" + celular +"&telefono=" + telefono + "&mensaje=" + mensaje + "&respuesta=" + respuesta + "&id=" + id,
+				dataType: 'html',
+				beforeSend: function () {
+					$("#loading").show();
+				},
+				success: function (data) {
+					$("#loading").hide();
+					if (data == "1") {
+						$("#mensaje").html("<div class='alert alert-success'>Contacto agregado</div>");
+					}
+					window.location.href = 'ver_contactos_web.html';
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>

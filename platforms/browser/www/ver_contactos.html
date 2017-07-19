@@ -1,0 +1,82 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bootstrap 101 Template</title>
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="css/estilo.css" rel="stylesheet">
+	<link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+	<div class="col-xs-12" style="background: rgba(0,0,0,0.5);padding:18px 20px !important;margin:0">
+		<img src="img/logo.png" width="140" class="logo" />
+	</div>
+	<div class="container">
+		<div class="clearfix"></div>
+		<br>
+		<div id="contactos" class="panel-group">
+		</div>
+	</div>
+
+	<div class="panel-group" id="formModificar">
+	</div>
+
+	<div>
+		<div class="col-xs-12"> </div>
+	</div>
+
+
+	<div id="footer"></div>
+
+	<div id="loading">Cargando...</div>
+
+	<script src='cordova.js'></script>
+	<script src="js/geolocation.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/validator.js"></script>
+	<script src="js/app.js"></script>
+	<script>
+		traerContactos(localStorage.getItem("idUsuario"));
+	</script>
+
+	<script>
+		function ModificarUsuarioContactos() {
+			//e.preventDefault();
+			var nombre = $("#nombre").val();
+			var apellido = $("#apellido").val();
+			var email = $("#email").val();
+			var celular = $("#celular").val();
+			var interes = $("#interes").val();
+			var observacion = $("#observacion").val();
+			var id = $("#id").val();
+			var tipo = '1';
+			var usuario = localStorage.getItem("idUsuario");
+
+			console.log("nombre:" + nombre + " / apellido:" + apellido + " / email:" + email + " / celular:" + celular + " / interes:" + interes + " / observacion:" + observacion + " / tipo:" + tipo + " / usuario:" + usuario + " / id:" + id)
+
+			$.ajax({
+				type: "GET",
+				url: url + "modificar.contactos.usuario.php",
+				data: "nombre=" + nombre + "&apellido=" + apellido + "&email=" + email + "&celular=" + celular + "&interes=" + interes + "&observacion=" + observacion + "&tipo=" + tipo + "&usuario=" + usuario + "&id=" + id,
+				dataType: 'html',
+				beforeSend: function () {
+					$("#loading").show();
+				},
+				success: function (data) {
+					$("#loading").hide();
+					if (data == "1") {
+						$("#mensaje").html("<div class='alert alert-success'>Contacto agregado</div>");
+					}
+					window.location.href = 'ver_contactos.html';
+				}
+			});
+		}
+	</script>
+</body>
+
+</html>
